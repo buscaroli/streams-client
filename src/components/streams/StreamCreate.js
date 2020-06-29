@@ -1,5 +1,7 @@
 import React from 'react'
 import { Field, reduxForm, getFormMeta } from 'redux-form'
+import { connect } from 'react-redux'
+import { createStream } from '../../actions'
 
 
 class StreamCreate extends React.Component {
@@ -46,7 +48,7 @@ class StreamCreate extends React.Component {
         )
     }
     
-    onSubmit(formValues) {
+    onSubmit = formValues => {
         // No need to call event.precentDefault() when using redux-form
         // Also: when using redux-form we don't deal anymore with an event
         // object as an argument to onSubmit, eg onSumbit(event) {...}.
@@ -54,6 +56,7 @@ class StreamCreate extends React.Component {
         // of the input fields, checkboxes etc. (passed through the
         // this.onSubmit paramenter inside the form element). You can checkout
         // the output of console.log(formValues) for clarifications. 
+        this.props.createStream(formValues)
     }
 
     render() {
@@ -63,6 +66,7 @@ class StreamCreate extends React.Component {
          * one of the properties of the this.props object as modified by 
          * redux-form.
         */
+
         return (
             <form   className="ui form error"
                     onSubmit={this.props.handleSubmit(this.onSubmit)} >
@@ -98,7 +102,9 @@ const validate = formValues => {
 
 // reduxForm is very similar to redux's connect but it
 // only takes one single object as an argument.
-export default reduxForm({
+const wrappedForm =  reduxForm({
     form: 'streamCreate',
     validate: validate
 })(StreamCreate)
+
+export default connect(null, { createStream })(wrappedForm)

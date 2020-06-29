@@ -1,4 +1,4 @@
-import { SIGN_IN, SIGN_OUT } from './types' // makes it easier to spot errors
+import { SIGN_IN, SIGN_OUT } from '../actions/types' // makes it easier to spot errors
                                             // if the types are mispelled as
                                             // we get errors by using VARIABLES
                                             // but not by using STRINGS.
